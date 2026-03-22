@@ -1,0 +1,93 @@
+<%- include('partials/top', { pageTitle }) %>
+<section class="hero-card">
+  <h1>Hi <%= childName %>!</h1>
+  <p>Tell Spark Coach what you want to practice.</p>
+</section>
+
+<section class="card chat-card">
+  <div class="chat-log" id="chatLog" aria-live="polite">
+    <% if (messages.length === 0) { %>
+    <p class="helper" id="emptyState">Start with a short message. Spark Coach will help step by step.</p>
+    <% } else { %>
+      <% messages.forEach((message) => { %>
+      <div class="bubble <%= message.sender === 'child' ? 'child' : 'coach' %>">
+        <strong><%= message.sender === 'child' ? 'You' : 'Spark Coach' %>:</strong>
+        <span><%= message.content %></span>
+      </div>
+      <% }) %>
+    <% } %>
+  </div>
+
+  <form id="chatForm" class="chat-form" autocomplete="off">
+    <label for="content">Message</label>
+    <textarea id="content" name="content" rows="3" maxlength="500" placeholder="Type here..."></textarea>
+    <button class="button" id="sendButton" type="submit">Send</button>
+  </form>
+
+  <form method="POST" action="/child/session/end" class="inline-form">
+    <button class="button ghost" type="submit">End Session</button>
+  </form>
+</section>
+
+<script>
+  const chatForm = document.getElementById('chatForm');
+  const chatLog = document.getElementById('chatLog');
+  const sendButton = document.getElementById('sendButton');
+
+  function appendBubble(sender, text) {
+    const emptyState = document.getElementById('emptyState');
+    if (emptyState) {
+      emptyState.remove();
+    }
+
+    const bubble = document.createElement('div');
+    bubble.className = `bubble ${sender}`;
+
+    const label = document.createElement('strong');
+    label.textContent = sender === 'child' ? 'You: ' : 'Spark Coach: ';
+
+    const content = document.createElement('span');
+    content.textContent = text;
+
+    bubble.appendChild(label);
+    bubble.appendChild(content);
+    chatLog.appendChild(bubble);
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+  chatForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const formData = new FormData(chatForm);
+    const content = (formData.get('content') || '').toString().trim();
+
+    if (!content) {
+      return;
+    }
+
+    appendBubble('child', content);
+    chatForm.reset();
+    sendButton.disabled = true;
+
+    try {
+      const response = await fetch('/child/session/message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ content })
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        appendBubble('coach', data.error || 'I did not catch that. Please try again.');
+      } else {
+        appendBubble('coach', data.reply);
+      }
+    } catch (error) {
+      appendBubble('coach', 'I had a little glitch. Please try again.');
+    } finally {
+      sendButton.disabled = false;
+    }
+  });
+</script>
+<%- include('partials/bottom') %>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= pageTitle %> | Spark Coach</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="site-header">
+        <a class="brand" href="/">Spark Coach</a>
+        <nav class="nav-links" aria-label="Main">
+          <% if (parentId) { %>
+          <a href="/parent/dashboard">Dashboard</a>
+          <a href="/parent/children/new">Add Child</a>
+          <form action="/parent/logout" method="POST">
+            <button type="submit" class="link-button">Sign Out</button>
+          </form>
+          <% } else if (childId) { %>
+          <a href="/child/session">Chat</a>
+          <form action="/child/logout" method="POST">
+            <button type="submit" class="link-button">Log Out</button>
+          </form>
+          <% } else { %>
+          <a href="/parent/login">Parent Sign In</a>
+          <a href="/parent/signup">Parent Sign Up</a>
+          <a href="/child/login">Child Login</a>
+          <% } %>
+        </nav>
+      </header>
+
+      <% if (flash) { %>
+      <section class="flash flash-<%= flash.type %>" role="status">
+        <%= flash.message %>
+      </section>
+      <% } %>
+
+      <main class="page-content">

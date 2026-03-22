@@ -1,0 +1,25 @@
+<%- include('partials/top', { pageTitle }) %>
+<section class="card form-card">
+  <h1>Child Login</h1>
+  <p>Pick your name. Type your 4-number PIN.</p>
+
+  <% if (children.length === 0) { %>
+  <p>No child profiles yet. Ask a parent to add one first.</p>
+  <% } else { %>
+  <form method="POST" action="/child/login" class="stack-form">
+    <label for="childId">Your Name</label>
+    <select id="childId" name="childId" required>
+      <option value="">Choose your name</option>
+      <% children.forEach((child) => { %>
+      <option value="<%= child.id %>"><%= child.name %> (age <%= child.age %>)</option>
+      <% }) %>
+    </select>
+
+    <label for="pin">Your PIN</label>
+    <input id="pin" name="pin" type="password" pattern="\d{4}" maxlength="4" required inputmode="numeric" />
+
+    <button class="button" type="submit">Start</button>
+  </form>
+  <% } %>
+</section>
+<%- include('partials/bottom') %>
