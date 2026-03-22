@@ -1,0 +1,13 @@
+<%- include('partials/top', { pageTitle }) %>
+<section class="hero-card">
+  <h1>Great Session, <%= summary.child_name %>!</h1>
+  <p>Here is your short recap.</p>
+</section>
+
+<section class="card">
+  <pre><%= summary.summary %></pre>
+  <div class="button-row">
+    <a class="button" href="/child/session">Start New Session</a>
+  </div>
+</section>
+<%- include('partials/bottom') %>

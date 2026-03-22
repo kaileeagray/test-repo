@@ -1,0 +1,30 @@
+{
+  "name": "workspace",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaileeagray/test-repo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaileeagray/test-repo/issues"
+  },
+  "homepage": "https://github.com/kaileeagray/test-repo#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "connect-sqlite3": "^0.9.16",
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "sqlite3": "^6.0.1"
+  }
+}

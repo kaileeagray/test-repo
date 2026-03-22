@@ -1,0 +1,41 @@
+<%- include('partials/top', { pageTitle }) %>
+<section class="hero-card">
+  <h1>Parent Dashboard</h1>
+  <p>Track each child and celebrate progress.</p>
+  <a href="/parent/children/new" class="button">Add Child Profile</a>
+</section>
+
+<section class="card">
+  <h2>Child Profiles</h2>
+  <% if (children.length === 0) { %>
+  <p>No child profiles yet. Add one to get started.</p>
+  <% } else { %>
+  <div class="grid two-up">
+    <% children.forEach((child) => { %>
+    <article class="mini-card">
+      <h3><%= child.name %></h3>
+      <p>Age: <strong><%= child.age %></strong></p>
+      <p>Sessions: <strong><%= child.total_sessions %></strong></p>
+      <p>Last session: <strong><%= child.last_session ? new Date(child.last_session).toLocaleDateString() : 'Not yet' %></strong></p>
+    </article>
+    <% }) %>
+  </div>
+  <% } %>
+</section>
+
+<section class="card">
+  <h2>Recent Session Summaries</h2>
+  <% if (recentSummaries.length === 0) { %>
+  <p>No finished sessions yet.</p>
+  <% } else { %>
+  <div class="summary-list">
+    <% recentSummaries.forEach((item) => { %>
+    <article class="summary-item">
+      <h3><%= item.child_name %> · <%= new Date(item.ended_at).toLocaleDateString() %></h3>
+      <pre><%= item.summary %></pre>
+    </article>
+    <% }) %>
+  </div>
+  <% } %>
+</section>
+<%- include('partials/bottom') %>

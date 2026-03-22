@@ -1,0 +1,25 @@
+<%- include('partials/top', { pageTitle }) %>
+<section class="hero-card">
+  <h1>Welcome to Spark Coach</h1>
+  <p>Short, friendly learning support for kids ages 6-12.</p>
+</section>
+
+<section class="grid two-up">
+  <article class="card">
+    <h2>For Parents</h2>
+    <p>Create child profiles and check progress.</p>
+    <div class="button-row">
+      <a class="button" href="/parent/signup">Create Account</a>
+      <a class="button ghost" href="/parent/login">Sign In</a>
+    </div>
+  </article>
+
+  <article class="card">
+    <h2>For Kids</h2>
+    <p>Login with your PIN and chat with Spark Coach.</p>
+    <div class="button-row">
+      <a class="button" href="/child/login">Start Chat</a>
+    </div>
+  </article>
+</section>
+<%- include('partials/bottom') %>

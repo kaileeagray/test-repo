@@ -1,0 +1,18 @@
+<%- include('partials/top', { pageTitle }) %>
+<section class="card form-card">
+  <h1>Add Child Profile</h1>
+  <p>Keep it simple. Set a 4-digit PIN.</p>
+  <form method="POST" action="/parent/children/new" class="stack-form">
+    <label for="name">Child Name</label>
+    <input id="name" name="name" type="text" maxlength="40" required />
+
+    <label for="age">Age</label>
+    <input id="age" name="age" type="number" min="6" max="12" required />
+
+    <label for="pin">4-Digit PIN</label>
+    <input id="pin" name="pin" type="password" pattern="\d{4}" maxlength="4" required inputmode="numeric" />
+
+    <button class="button" type="submit">Save Profile</button>
+  </form>
+</section>
+<%- include('partials/bottom') %>
